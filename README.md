@@ -1,6 +1,6 @@
 # Lesson 10 — Production-Ready RAG API
 
-Мінімальний production-style RAG API для домашнього завдання **Lesson 10 — API Layer for AI Systems**.
+Мінімальний production-style RAG API для домашнього завдання.
 
 Сервіс приймає питання користувача, шукає релевантні фрагменти у заздалегідь проіндексованому документі, передає їх у LLM як контекст і повертає відповідь через **SSE streaming**.
 
@@ -14,13 +14,14 @@
 data/source.md
 ```
 
-Основний сценарій:
+Основний workflow:
 
 ```text
 user query
 → auth
 → rate limit
 → prompt injection guard
+→ concurrency slot
 → query embedding
 → semantic cache
 → vector search
@@ -740,7 +741,7 @@ output: $0.60 / 1M tokens
 - Cost tracking приблизний, бо streaming responses не завжди повертають usage metadata.
 - Free-моделі OpenRouter можуть повертати `429`, `zero_tokens` або нестабільні відповіді.
 - Docker image великий через `sentence-transformers` / `torch`.
-- Public deploy ще треба додати окремо.
+- Public deploy не виконано; проєкт підготовлений до контейнерного запуску через Docker.
 - Для production треба додати нормальні unit/integration tests.
 - Для production бажано додати structured logging.
 - Поточний prompt injection defense rule-based, не ML-based.
@@ -767,14 +768,23 @@ output: $0.60 / 1M tokens
 | Langfuse observability | Done |
 | Dockerfile | Done |
 | Docker local run | Done |
-| Public deploy | TODO |
+| Public deploy | Not completed; Docker local run verified |
 
 ---
 
-## 19. Public URL
+## 19. Фінальний статус
 
-TODO після deploy:
+Проєкт реалізує основні production-шари для RAG API:
 
-```text
-https://your-public-api-url.example.com
-```
+- API layer.
+- Retrieval layer.
+- LLM streaming layer.
+- Semantic cache.
+- Rate limiting.
+- Cost tracking.
+- Security guard.
+- Runtime metrics.
+- Observability.
+- Docker support.
+
+Публічний deploy не виконано в цій версії. Проєкт підготовлений до контейнерного запуску через Docker і перевірений локально.
