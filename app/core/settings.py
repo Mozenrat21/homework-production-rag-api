@@ -19,6 +19,11 @@ class Settings(BaseSettings):
     openrouter_site_url: str = "http://localhost:8000"
     openrouter_app_title: str = "Lesson 10 Production RAG API"
 
+    embedding_provider: str = "local"
+    local_embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
+    remote_embedding_model: str = "openai/text-embedding-3-small"
+    embedding_dimensions: int = 384
+
     sqlite_db_path: str = "./data/usage.db"
 
     semantic_cache_threshold: float = 0.92
